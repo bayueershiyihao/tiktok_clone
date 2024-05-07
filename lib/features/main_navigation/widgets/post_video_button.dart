@@ -4,7 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constans/sizes.dart';
 
 class PostVideoButton extends StatefulWidget {
-  const PostVideoButton({super.key});
+  final bool inverted;
+  const PostVideoButton({
+    super.key,
+    required this.inverted,
+  });
 
   @override
   State<PostVideoButton> createState() => _PostVideoButtonState();
@@ -34,7 +38,7 @@ class _PostVideoButtonState extends State<PostVideoButton> {
         clipBehavior: Clip.none,
         children: [
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 250),
             curve: Curves.fastOutSlowIn,
             right: _isSelected ? -4 : 22,
             child: Container(
@@ -52,7 +56,7 @@ class _PostVideoButtonState extends State<PostVideoButton> {
             ),
           ),
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 250),
             curve: Curves.fastOutSlowIn,
             left: _isSelected ? -4 : 22,
             child: Container(
@@ -75,13 +79,13 @@ class _PostVideoButtonState extends State<PostVideoButton> {
               horizontal: Sizes.size14,
             ),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: widget.inverted ? Colors.black : Colors.white,
               borderRadius: BorderRadius.circular(Sizes.size12),
             ),
-            child: const Center(
+            child: Center(
               child: FaIcon(
                 FontAwesomeIcons.plus,
-                color: Colors.black,
+                color: widget.inverted ? Colors.white : Colors.black,
                 size: Sizes.size24,
               ),
             ),

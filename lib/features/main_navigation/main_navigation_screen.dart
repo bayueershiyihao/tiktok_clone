@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constans/gaps.dart';
-
-import 'package:tiktok_clone/constans/sizes.dart';
+import 'package:tiktok_clone/features/discover/discover_screen.dart';
+import 'package:tiktok_clone/features/inbox/inbox_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/post_video_button.dart';
-import 'package:tiktok_clone/features/main_navigation/widgets/stf_screen.dart';
+import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
+import 'package:tiktok_clone/users/user_profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -17,7 +16,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 4;
 
   void _onTap(int index) {
     setState(() {
@@ -42,30 +41,32 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
       body: Stack(
         children: [
           Offstage(
             offstage: _selectedIndex != 0,
-            child: const StfSCreen(),
+            child: const VideoTimelineScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: const StfSCreen(),
+            child: const DiscoverScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
-            child: const StfSCreen(),
+            child: const InboxScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 4,
-            child: const StfSCreen(),
+            child: const UserProfileScreen(),
           ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
         height: 80,
-        color: Colors.black,
-        surfaceTintColor: Colors.black,
+        color: _selectedIndex == 0 ? Colors.black : Colors.white,
+        surfaceTintColor: _selectedIndex == 0 ? Colors.black : Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -74,6 +75,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               text: 'Home',
               isSelected: _selectedIndex == 0,
               onTap: () => _onTap(0),
+              selectedIndex: _selectedIndex,
               selectedIcon: FontAwesomeIcons.house,
             ),
             NavTab(
@@ -81,12 +83,15 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               text: 'Discover',
               isSelected: _selectedIndex == 1,
               onTap: () => _onTap(1),
+              selectedIndex: _selectedIndex,
               selectedIcon: FontAwesomeIcons.solidCompass,
             ),
             Gaps.h24,
             GestureDetector(
               onTap: _onPostVideoButtonTap,
-              child: const PostVideoButton(),
+              child: PostVideoButton(
+                inverted: _selectedIndex != 0,
+              ),
             ),
             Gaps.h24,
             NavTab(
@@ -94,6 +99,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               text: 'Inbox',
               isSelected: _selectedIndex == 3,
               onTap: () => _onTap(3),
+              selectedIndex: _selectedIndex,
               selectedIcon: FontAwesomeIcons.solidMessage,
             ),
             NavTab(
@@ -101,6 +107,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               text: 'Profile',
               isSelected: _selectedIndex == 4,
               onTap: () => _onTap(4),
+              selectedIndex: _selectedIndex,
               selectedIcon: FontAwesomeIcons.solidUser,
             ),
           ],
